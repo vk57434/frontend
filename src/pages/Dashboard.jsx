@@ -67,7 +67,7 @@ export default function Dashboard() {
           <ul>
             {scores.map((s, i) => (
               <li key={i}>
-                {s.value} — {new Date(s.date).toLocaleDateString()}
+                {s.value} — {new Date(s.created_at).toLocaleString()}
               </li>
             ))}
           </ul>
