@@ -1,10 +1,11 @@
 import { useState } from "react";
 import API from "../api/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
+  const [alreadyRegistered, setAlreadyRegistered] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -13,7 +14,11 @@ export default function Register() {
       await API.post("/auth/register", form);
       navigate("/login");
     } catch (err) {
-      setError(err?.response?.data?.msg || "Registration failed");
+      const message = err?.response?.data?.msg || "Registration failed";
+      setError(message);
+      if (/already.*registered|exists/i.test(message)) {
+        setAlreadyRegistered(true);
+      }
     }
   };
 
@@ -51,6 +56,22 @@ export default function Register() {
         />
 
         <button className="w-full bg-purple-600 py-2 rounded">Register</button>
+
+        <div className="mt-4 text-center text-sm text-gray-300">
+          Already registered? 
+          <Link to="/login" className="text-purple-300 hover:text-purple-100">
+            Login
+          </Link>
+        </div>
+
+        {alreadyRegistered && (
+          <div className="mt-3 text-center text-green-300">
+            You already have an account. 
+            <Link to="/login" className="font-semibold underline">
+              Go to Login
+            </Link>
+          </div>
+        )}
       </form>
     </div>
   );
