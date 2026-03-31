@@ -18,6 +18,10 @@ export default function Dashboard() {
     const { data } = await API.get("/charity");
     setCharities(data);
   };
+  const runDraw = async () => {
+    const { data } = await API.get("/draw/run");
+    alert(`Winner: ${data.winner} 🎉`);
+  };
 
   useEffect(() => {
     fetchScores();
@@ -74,7 +78,7 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* ✅ Charity Section (NEW) */}
+      {/* ✅ Charity Section */}
       <div className="bg-gray-900 p-4 rounded-xl mb-6">
         <h2 className="text-xl mb-3">Select Charity</h2>
 
@@ -90,11 +94,17 @@ export default function Dashboard() {
           ))}
         </select>
 
-        <button
-          onClick={selectCharity}
-          className="bg-blue-500 px-4 py-2"
-        >
+        <button onClick={selectCharity} className="bg-blue-500 px-4 py-2">
           Save
+        </button>
+      </div>
+
+      {/* 🎯 Draw Section (SEPARATE) */}
+      <div className="bg-gray-900 p-4 rounded-xl">
+        <h2 className="text-xl mb-3">Monthly Draw</h2>
+
+        <button onClick={runDraw} className="bg-purple-500 px-4 py-2">
+          Run Draw 🎉
         </button>
       </div>
     </div>
