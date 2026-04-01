@@ -66,7 +66,7 @@ const mockDraws = [
   },
   {
     id: 3,
-    numbers: [08, 22, 39, 54, 71],
+    numbers: [8, 22, 39, 54, 71],
     date: "2024-03-14",
     winner: "Emma Wilson",
     prize: 5000,
