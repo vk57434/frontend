@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/api";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Dashboard() {
+  const { setUser } = useContext(AuthContext);
   const [score, setScore] = useState("");
   const navigate = useNavigate();
   const [scores, setScores] = useState([]);
@@ -40,6 +42,8 @@ export default function Dashboard() {
   // Logout
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
     navigate("/login");
   };
 
