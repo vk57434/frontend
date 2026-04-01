@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../api/api";
 
 export default function Dashboard() {
   const [score, setScore] = useState("");
+  const navigate = useNavigate();
   const [scores, setScores] = useState([]);
   const [charities, setCharities] = useState([]);
   const [selectedCharity, setSelectedCharity] = useState("");
@@ -35,6 +37,12 @@ export default function Dashboard() {
     fetchScores();
   };
 
+  // Logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   // Select charity
   const selectCharity = async () => {
     await API.post("/charity/select", {
@@ -45,7 +53,15 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
-      <h1 className="text-3xl mb-6">Dashboard</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl">Dashboard</h1>
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 hover:bg-red-400 px-4 py-2 rounded"
+        >
+          Logout
+        </button>
+      </div>
 
       {/* Add Score */}
       <div className="bg-gray-900 p-4 rounded-xl mb-6">
